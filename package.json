@@ -1,0 +1,125 @@
+{
+  "name": "@raccoon.ninja/otel-react",
+  "version": "0.0.1",
+  "description": "Drop-in OpenTelemetry instrumentation for React, React Native, and Next.js",
+  "author": "raccoon.ninja",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./native": {
+      "import": {
+        "types": "./dist/native/index.d.mts",
+        "default": "./dist/native/index.mjs"
+      },
+      "require": {
+        "types": "./dist/native/index.d.ts",
+        "default": "./dist/native/index.cjs"
+      }
+    },
+    "./nextjs": {
+      "import": {
+        "types": "./dist/nextjs/index.d.mts",
+        "default": "./dist/nextjs/index.mjs"
+      },
+      "require": {
+        "types": "./dist/nextjs/index.d.ts",
+        "default": "./dist/nextjs/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-native": ">=0.70.0",
+    "next": "^13.0.0 || ^14.0.0 || ^15.0.0",
+    "react-router": "^6.0.0 || ^7.0.0",
+    "@react-navigation/native": "^6.0.0 || ^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    },
+    "react-router": {
+      "optional": true
+    },
+    "@react-navigation/native": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/api-logs": "^0.56.0",
+    "@opentelemetry/sdk-trace-web": "^2.0.0",
+    "@opentelemetry/sdk-trace-base": "^2.0.0",
+    "@opentelemetry/sdk-metrics": "^2.0.0",
+    "@opentelemetry/sdk-logs": "^0.200.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.200.0",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.200.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.200.0",
+    "@opentelemetry/resources": "^2.0.0",
+    "@opentelemetry/semantic-conventions": "^1.28.0",
+    "@opentelemetry/instrumentation": "^0.200.0",
+    "@opentelemetry/instrumentation-fetch": "^0.200.0",
+    "@opentelemetry/instrumentation-xml-http-request": "^0.200.0",
+    "@opentelemetry/instrumentation-document-load": "^0.44.0",
+    "@opentelemetry/instrumentation-user-interaction": "^0.44.0",
+    "web-vitals": "^4.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/coverage-v8": "^3.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "jsdom": "^25.0.0",
+    "prettier": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
