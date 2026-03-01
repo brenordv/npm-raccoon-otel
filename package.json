@@ -4,6 +4,10 @@
   "description": "Drop-in OpenTelemetry instrumentation for React, React Native, and Next.js",
   "author": "raccoon.ninja",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brenordv/npm-raccoon-otel.git"
+  },
   "exports": {
     ".": {
       "import": {
