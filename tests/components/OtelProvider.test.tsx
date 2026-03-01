@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 // Mock initOtel before importing the component
@@ -28,11 +28,7 @@ describe('OtelProvider', () => {
 
   it('calls initOtel on mount with correct options', () => {
     render(
-      <OtelProvider
-        serviceName="test-app"
-        endpoint="http://collector:4318"
-        serviceVersion="1.0.0"
-      >
+      <OtelProvider serviceName="test-app" endpoint="http://collector:4318" serviceVersion="1.0.0">
         <div>App</div>
       </OtelProvider>,
     );

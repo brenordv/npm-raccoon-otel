@@ -38,9 +38,7 @@ describe('startWebVitalsCollection', () => {
     const createHistogram = metrics.getMeter('test').createHistogram;
     expect(createHistogram).toHaveBeenCalledTimes(5);
 
-    const histogramNames = vi.mocked(createHistogram).mock.calls.map(
-      (call) => call[0],
-    );
+    const histogramNames = vi.mocked(createHistogram).mock.calls.map((call) => call[0]);
     expect(histogramNames).toContain('web_vitals.lcp');
     expect(histogramNames).toContain('web_vitals.cls');
     expect(histogramNames).toContain('web_vitals.inp');

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { buildResource } from '../../src/core/resource';
 
 describe('buildResource', () => {
@@ -32,7 +32,7 @@ describe('buildResource', () => {
   it('sets SDK attributes', () => {
     const resource = buildResource({ serviceName: 'test' });
     expect(resource.attributes['telemetry.sdk.name']).toBe('@raccoon.ninja/otel-react');
-    expect(resource.attributes['telemetry.sdk.version']).toBe('0.0.1');
+    expect(resource.attributes['telemetry.sdk.version']).toBe('0.0.2');
     expect(resource.attributes['telemetry.sdk.language']).toBe('webjs');
   });
 

@@ -34,9 +34,7 @@ export async function initOtelServer(options: OtelOptions): Promise<OtelHandle> 
   // Dynamic imports to prevent bundling Node.js SDK in client builds.
   // These packages must be installed separately by the user as they are
   // Node.js-only and not included in this package's dependencies.
-  const { BasicTracerProvider, BatchSpanProcessor } = await import(
-    '@opentelemetry/sdk-trace-base'
-  );
+  const { BasicTracerProvider, BatchSpanProcessor } = await import('@opentelemetry/sdk-trace-base');
   const { OTLPTraceExporter } = await import('@opentelemetry/exporter-trace-otlp-http');
   const { OTLPLogExporter } = await import('@opentelemetry/exporter-logs-otlp-http');
   const { LoggerProvider, BatchLogRecordProcessor } = await import('@opentelemetry/sdk-logs');

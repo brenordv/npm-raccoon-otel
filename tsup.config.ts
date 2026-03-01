@@ -32,12 +32,7 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     treeshake: true,
-    external: [
-      'react',
-      'react-dom',
-      'react-native',
-      '@react-navigation/native',
-    ],
+    external: ['react', 'react-dom', 'react-native', '@react-navigation/native'],
     outExtension({ format }) {
       return {
         js: format === 'esm' ? '.mjs' : '.cjs',

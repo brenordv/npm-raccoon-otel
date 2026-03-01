@@ -3,11 +3,7 @@ import { BasicTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trac
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { SeverityNumber } from '@opentelemetry/api-logs';
 import type { OtelOptions, OtelHandle } from '../core/options';
-import {
-  validateOptions,
-  resolveEndpoint,
-  resolveExportTimeout,
-} from '../core/options';
+import { validateOptions, resolveEndpoint, resolveExportTimeout } from '../core/options';
 import { buildResource } from '../core/resource';
 import { createLoggerProvider } from '../providers/logger';
 import { createMeterProvider } from '../providers/meter';
@@ -25,9 +21,7 @@ let initialized = false;
  */
 export async function initOtelNative(options: OtelOptions): Promise<OtelHandle> {
   if (initialized) {
-    console.warn(
-      '[@raccoon.ninja/otel-react] initOtelNative() has already been called. Skipping.',
-    );
+    console.warn('[@raccoon.ninja/otel-react] initOtelNative() has already been called. Skipping.');
     return {
       shutdown: async () => {
         /* noop */

@@ -53,20 +53,20 @@ All telemetry is sent to `http://localhost:4318` by default (the standard OTLP H
 
 ### OtelProvider Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `serviceName` | `string` | **(required)** | Sets the `service.name` resource attribute |
-| `endpoint` | `string` | `http://localhost:4318` | OTLP HTTP collector endpoint |
-| `serviceVersion` | `string` | -- | Sets `service.version` resource attribute |
-| `environment` | `string` | -- | Sets `deployment.environment` resource attribute |
-| `headers` | `Record<string, string>` | -- | Custom headers for OTLP requests (e.g., auth tokens) |
-| `exportTimeout` | `number` | `30000` | Export timeout in milliseconds |
-| `ignoreUrls` | `(string \| RegExp)[]` | -- | URLs to exclude from fetch/XHR instrumentation |
-| `instrumentations` | `InstrumentationConfig` | all enabled | Enable/disable specific auto-instrumentations |
-| `resourceAttributes` | `Record<string, string>` | -- | Additional OTel resource attributes |
-| `extensions` | `OtelExtension[]` | -- | Opt-in extensions (e.g., `withReactRouter()`) |
-| `configureTracing` | `(provider) => void` | -- | Escape hatch to configure the TracerProvider |
-| `configureExporter` | `(exporter) => void` | -- | Escape hatch to configure the OTLP exporter |
+| Prop                 | Type                     | Default                 | Description                                          |
+| -------------------- | ------------------------ | ----------------------- | ---------------------------------------------------- |
+| `serviceName`        | `string`                 | **(required)**          | Sets the `service.name` resource attribute           |
+| `endpoint`           | `string`                 | `http://localhost:4318` | OTLP HTTP collector endpoint                         |
+| `serviceVersion`     | `string`                 | --                      | Sets `service.version` resource attribute            |
+| `environment`        | `string`                 | --                      | Sets `deployment.environment` resource attribute     |
+| `headers`            | `Record<string, string>` | --                      | Custom headers for OTLP requests (e.g., auth tokens) |
+| `exportTimeout`      | `number`                 | `30000`                 | Export timeout in milliseconds                       |
+| `ignoreUrls`         | `(string \| RegExp)[]`   | --                      | URLs to exclude from fetch/XHR instrumentation       |
+| `instrumentations`   | `InstrumentationConfig`  | all enabled             | Enable/disable specific auto-instrumentations        |
+| `resourceAttributes` | `Record<string, string>` | --                      | Additional OTel resource attributes                  |
+| `extensions`         | `OtelExtension[]`        | --                      | Opt-in extensions (e.g., `withReactRouter()`)        |
+| `configureTracing`   | `(provider) => void`     | --                      | Escape hatch to configure the TracerProvider         |
+| `configureExporter`  | `(exporter) => void`     | --                      | Escape hatch to configure the OTLP exporter          |
 
 ### Pointing to a Collector
 
@@ -86,11 +86,11 @@ All telemetry is sent to `http://localhost:4318` by default (the standard OTLP H
 <OtelProvider
   serviceName="my-app"
   instrumentations={{
-    fetch: true,           // default: true
-    xhr: false,            // disable XHR instrumentation
-    documentLoad: true,    // default: true
+    fetch: true, // default: true
+    xhr: false, // disable XHR instrumentation
+    documentLoad: true, // default: true
     userInteraction: false, // disable click tracking
-    webVitals: true,       // default: true
+    webVitals: true, // default: true
   }}
 >
   <App />
@@ -104,11 +104,7 @@ Useful for health checks, analytics endpoints, or any URL that shouldn't generat
 ```tsx
 <OtelProvider
   serviceName="my-app"
-  ignoreUrls={[
-    /\/health$/,
-    /\/analytics/,
-    'https://cdn.example.com',
-  ]}
+  ignoreUrls={[/\/health$/, /\/analytics/, 'https://cdn.example.com']}
 >
   <App />
 </OtelProvider>
@@ -170,6 +166,7 @@ The fallback can also be a render function that receives the error and a reset c
 ```
 
 Each caught error generates:
+
 - A span with `error.type`, `error.message`, `error.stack`, and `error.component_stack` attributes
 - A log record at `ERROR` severity with the same details
 
@@ -220,10 +217,7 @@ import { OtelProvider, withReactRouter } from '@raccoon.ninja/otel-react';
 
 function App() {
   return (
-    <OtelProvider
-      serviceName="my-app"
-      extensions={[withReactRouter()]}
-    >
+    <OtelProvider serviceName="my-app" extensions={[withReactRouter()]}>
       <RouterProvider router={router} />
     </OtelProvider>
   );
@@ -234,38 +228,38 @@ function App() {
 
 ### Traces (Automatic)
 
-| Signal | Source | What It Captures |
-|--------|--------|-----------------|
-| `fetch()` calls | `@opentelemetry/instrumentation-fetch` | URL, method, status, duration |
-| `XMLHttpRequest` | `@opentelemetry/instrumentation-xml-http-request` | URL, method, status, duration |
-| Document load | `@opentelemetry/instrumentation-document-load` | DNS, TCP, TLS, DOM processing |
-| User interactions | `@opentelemetry/instrumentation-user-interaction` | Click events on DOM elements |
-| Error boundary | `TracedErrorBoundary` | Uncaught errors with component stack |
+| Signal            | Source                                            | What It Captures                     |
+| ----------------- | ------------------------------------------------- | ------------------------------------ |
+| `fetch()` calls   | `@opentelemetry/instrumentation-fetch`            | URL, method, status, duration        |
+| `XMLHttpRequest`  | `@opentelemetry/instrumentation-xml-http-request` | URL, method, status, duration        |
+| Document load     | `@opentelemetry/instrumentation-document-load`    | DNS, TCP, TLS, DOM processing        |
+| User interactions | `@opentelemetry/instrumentation-user-interaction` | Click events on DOM elements         |
+| Error boundary    | `TracedErrorBoundary`                             | Uncaught errors with component stack |
 
 ### Metrics (Automatic)
 
-| Metric | Type | Description |
-|--------|------|-------------|
-| `web_vitals.lcp` | Histogram | Largest Contentful Paint (ms) |
-| `web_vitals.cls` | Histogram | Cumulative Layout Shift |
-| `web_vitals.inp` | Histogram | Interaction to Next Paint (ms) |
-| `web_vitals.ttfb` | Histogram | Time to First Byte (ms) |
-| `web_vitals.fcp` | Histogram | First Contentful Paint (ms) |
+| Metric            | Type      | Description                    |
+| ----------------- | --------- | ------------------------------ |
+| `web_vitals.lcp`  | Histogram | Largest Contentful Paint (ms)  |
+| `web_vitals.cls`  | Histogram | Cumulative Layout Shift        |
+| `web_vitals.inp`  | Histogram | Interaction to Next Paint (ms) |
+| `web_vitals.ttfb` | Histogram | Time to First Byte (ms)        |
+| `web_vitals.fcp`  | Histogram | First Contentful Paint (ms)    |
 
 Each metric includes `web_vitals.rating` (`good`, `needs-improvement`, `poor`) and `page.url` attributes.
 
 ### Resource Attributes (Automatic)
 
-| Attribute | Source |
-|-----------|--------|
-| `service.name` | Config (required) |
-| `service.version` | Config (optional) |
-| `deployment.environment` | Config (optional) |
-| `telemetry.sdk.name` | `@raccoon.ninja/otel-react` |
-| `telemetry.sdk.version` | Package version |
-| `browser.language` | `navigator.language` |
-| `browser.user_agent` | `navigator.userAgent` |
-| `browser.platform` | `navigator.platform` |
+| Attribute                | Source                      |
+| ------------------------ | --------------------------- |
+| `service.name`           | Config (required)           |
+| `service.version`        | Config (optional)           |
+| `deployment.environment` | Config (optional)           |
+| `telemetry.sdk.name`     | `@raccoon.ninja/otel-react` |
+| `telemetry.sdk.version`  | Package version             |
+| `browser.language`       | `navigator.language`        |
+| `browser.user_agent`     | `navigator.userAgent`       |
+| `browser.platform`       | `navigator.platform`        |
 
 Custom attributes can be added via the `resourceAttributes` prop.
 
@@ -283,6 +277,7 @@ const otel = await initOtel({
 ```
 
 Key differences from the browser entry:
+
 - Uses `BasicTracerProvider` instead of `WebTracerProvider` (no DOM APIs)
 - Only `fetch` instrumentation is enabled (no document load, user interaction, or Web Vitals)
 - XHR is disabled by default to avoid duplicate spans (React Native's `fetch` polyfills over XHR)
@@ -337,11 +332,7 @@ export async function register() {
 import { OtelProvider } from '@raccoon.ninja/otel-react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <OtelProvider serviceName="my-nextjs-app">
-      {children}
-    </OtelProvider>
-  );
+  return <OtelProvider serviceName="my-nextjs-app">{children}</OtelProvider>;
 }
 
 // app/layout.tsx
@@ -371,11 +362,11 @@ receivers:
         endpoint: 0.0.0.0:4318
         cors:
           allowed_origins:
-            - "https://your-app.com"
-            - "http://localhost:3000"
+            - 'https://your-app.com'
+            - 'http://localhost:3000'
           allowed_headers:
-            - "Content-Type"
-            - "X-Requested-With"
+            - 'Content-Type'
+            - 'X-Requested-With'
           max_age: 7200
 ```
 
@@ -394,32 +385,32 @@ This ensures telemetry is not lost during page navigation or tab close.
 
 ### Exports from `@raccoon.ninja/otel-react`
 
-| Export | Type | Description |
-|--------|------|-------------|
-| `OtelProvider` | Component | React provider that initializes OTel on mount |
-| `TracedErrorBoundary` | Component | Error boundary that records errors as spans/logs |
-| `initOtel` | Function | Imperative initialization, returns `OtelHandle` |
-| `useTracer` | Hook | Get an OTel `Tracer` for custom spans |
-| `withReactRouter` | Function | Extension for React Router route tracing |
-| `OtelOptions` | Type | Configuration interface |
-| `OtelHandle` | Type | Handle with `shutdown()` method |
-| `OtelExtension` | Type | Extension function signature |
-| `InstrumentationConfig` | Type | Instrumentation toggle config |
-| `OtelProviderProps` | Type | Props for `<OtelProvider>` |
-| `TracedErrorBoundaryProps` | Type | Props for `<TracedErrorBoundary>` |
+| Export                     | Type      | Description                                      |
+| -------------------------- | --------- | ------------------------------------------------ |
+| `OtelProvider`             | Component | React provider that initializes OTel on mount    |
+| `TracedErrorBoundary`      | Component | Error boundary that records errors as spans/logs |
+| `initOtel`                 | Function  | Imperative initialization, returns `OtelHandle`  |
+| `useTracer`                | Hook      | Get an OTel `Tracer` for custom spans            |
+| `withReactRouter`          | Function  | Extension for React Router route tracing         |
+| `OtelOptions`              | Type      | Configuration interface                          |
+| `OtelHandle`               | Type      | Handle with `shutdown()` method                  |
+| `OtelExtension`            | Type      | Extension function signature                     |
+| `InstrumentationConfig`    | Type      | Instrumentation toggle config                    |
+| `OtelProviderProps`        | Type      | Props for `<OtelProvider>`                       |
+| `TracedErrorBoundaryProps` | Type      | Props for `<TracedErrorBoundary>`                |
 
 ### Exports from `@raccoon.ninja/otel-react/native`
 
-| Export | Type | Description |
-|--------|------|-------------|
-| `initOtel` | Function | RN-specific initialization (async) |
-| `withReactNavigation` | Function | Extension for React Navigation |
-| `createNavigationTracker` | Function | Creates `onStateChange` handler |
+| Export                    | Type     | Description                        |
+| ------------------------- | -------- | ---------------------------------- |
+| `initOtel`                | Function | RN-specific initialization (async) |
+| `withReactNavigation`     | Function | Extension for React Navigation     |
+| `createNavigationTracker` | Function | Creates `onStateChange` handler    |
 
 ### Exports from `@raccoon.ninja/otel-react/nextjs`
 
-| Export | Type | Description |
-|--------|------|-------------|
+| Export           | Type     | Description                                         |
+| ---------------- | -------- | --------------------------------------------------- |
 | `initOtelServer` | Function | Server-side initialization for `instrumentation.ts` |
 
 ## Requirements

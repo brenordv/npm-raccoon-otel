@@ -24,8 +24,5 @@ const DEFAULT_TRACER_NAME = '@raccoon.ninja/otel-react/custom';
  * ```
  */
 export function useTracer(name?: string, version?: string): Tracer {
-  return useMemo(
-    () => trace.getTracer(name ?? DEFAULT_TRACER_NAME, version),
-    [name, version],
-  );
+  return useMemo(() => trace.getTracer(name ?? DEFAULT_TRACER_NAME, version), [name, version]);
 }
