@@ -2,11 +2,11 @@ import { trace } from '@opentelemetry/api';
 import { BasicTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { SeverityNumber } from '@opentelemetry/api-logs';
-import type { OtelOptions, OtelHandle } from '../core/options';
-import { validateOptions, resolveEndpoint, resolveExportTimeout } from '../core/options';
-import { buildResource } from '../core/resource';
-import { createLoggerProvider } from '../providers/logger';
-import { createMeterProvider } from '../providers/meter';
+import type { OtelOptions, OtelHandle } from '@/core/options';
+import { validateOptions, resolveEndpoint, resolveExportTimeout } from '@/core/options';
+import { buildResource } from '@/core/resource';
+import { createLoggerProvider } from '@/providers/logger';
+import { createMeterProvider } from '@/providers/meter';
 
 let initialized = false;
 

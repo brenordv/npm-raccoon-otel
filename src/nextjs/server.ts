@@ -1,5 +1,5 @@
-import type { OtelOptions, OtelHandle } from '../core/options';
-import { validateOptions, resolveEndpoint, resolveExportTimeout } from '../core/options';
+import type { OtelOptions, OtelHandle } from '@/core/options';
+import { validateOptions, resolveEndpoint, resolveExportTimeout } from '@/core/options';
 
 /**
  * Initialize OpenTelemetry for Next.js server-side (instrumentation.ts).
