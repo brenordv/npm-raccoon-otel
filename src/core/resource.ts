@@ -7,7 +7,7 @@ import {
 import type { OtelOptions } from './options';
 
 const SDK_NAME = '@raccoon.ninja/otel-react';
-const SDK_VERSION = '0.0.2';
+const SDK_VERSION = '0.0.3';
 
 export function buildResource(options: OtelOptions) {
   const attributes: Record<string, string> = {

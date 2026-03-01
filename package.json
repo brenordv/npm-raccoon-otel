@@ -1,6 +1,6 @@
 {
   "name": "@raccoon.ninja/otel-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Drop-in OpenTelemetry instrumentation for React, React Native, and Next.js",
   "author": "raccoon.ninja",
   "license": "MIT",
