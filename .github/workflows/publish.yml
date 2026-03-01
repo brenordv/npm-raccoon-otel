@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
-          registry-url: https://registry.npmjs.org
           cache: npm
 
       - name: Install dependencies
@@ -46,10 +45,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Configure npm for OIDC publishing
+        run: |
+          echo "//registry.npmjs.org/:_authToken=" > ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+
       - name: Publish to npm
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
         env:
