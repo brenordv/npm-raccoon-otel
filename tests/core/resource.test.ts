@@ -32,7 +32,7 @@ describe('buildResource', () => {
   it('sets SDK attributes', () => {
     const resource = buildResource({ serviceName: 'test' });
     expect(resource.attributes['telemetry.sdk.name']).toBe('@raccoon.ninja/otel-react');
-    expect(resource.attributes['telemetry.sdk.version']).toBe('0.0.3');
+    expect(resource.attributes['telemetry.sdk.version']).toBe('0.0.4');
     expect(resource.attributes['telemetry.sdk.language']).toBe('webjs');
   });
 
