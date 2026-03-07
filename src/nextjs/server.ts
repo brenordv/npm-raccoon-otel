@@ -81,8 +81,10 @@ export async function initOtelServer(options: OtelOptions): Promise<OtelHandle> 
     timeoutMillis: timeout,
   });
 
-  const loggerProvider = new LoggerProvider({ resource });
-  loggerProvider.addLogRecordProcessor(new BatchLogRecordProcessor(logExporter));
+  const loggerProvider = new LoggerProvider({
+    resource,
+    processors: [new BatchLogRecordProcessor(logExporter)],
+  });
   logs.setGlobalLoggerProvider(loggerProvider);
 
   return {
