@@ -62,6 +62,7 @@ All telemetry is sent to `http://localhost:4318` by default (the standard OTLP H
 | `headers`            | `Record<string, string>` | --                      | Custom headers for OTLP requests (e.g., auth tokens) |
 | `exportTimeout`      | `number`                 | `30000`                 | Export timeout in milliseconds                       |
 | `ignoreUrls`         | `(string \| RegExp)[]`   | --                      | URLs to exclude from fetch/XHR instrumentation       |
+| `propagateTraceHeaderCorsUrls` | `(string \| RegExp)[]` | `[]`              | Cross-origin URLs that should receive W3C Trace Context headers |
 | `instrumentations`   | `InstrumentationConfig`  | all enabled             | Enable/disable specific auto-instrumentations        |
 | `resourceAttributes` | `Record<string, string>` | --                      | Additional OTel resource attributes                  |
 | `extensions`         | `OtelExtension[]`        | --                      | Opt-in extensions (e.g., `withReactRouter()`)        |
