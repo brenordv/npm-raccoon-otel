@@ -53,21 +53,21 @@ All telemetry is sent to `http://localhost:4318` by default (the standard OTLP H
 
 ### OtelProvider Props
 
-| Prop                 | Type                     | Default                 | Description                                          |
-| -------------------- | ------------------------ | ----------------------- | ---------------------------------------------------- |
-| `serviceName`        | `string`                 | **(required)**          | Sets the `service.name` resource attribute           |
-| `endpoint`           | `string`                 | `http://localhost:4318` | OTLP HTTP collector endpoint                         |
-| `serviceVersion`     | `string`                 | --                      | Sets `service.version` resource attribute            |
-| `environment`        | `string`                 | --                      | Sets `deployment.environment` resource attribute     |
-| `headers`            | `Record<string, string>` | --                      | Custom headers for OTLP requests (e.g., auth tokens) |
-| `exportTimeout`      | `number`                 | `30000`                 | Export timeout in milliseconds                       |
-| `ignoreUrls`         | `(string \| RegExp)[]`   | --                      | URLs to exclude from fetch/XHR instrumentation       |
-| `propagateTraceHeaderCorsUrls` | `(string \| RegExp)[]` | `[]`              | Cross-origin URLs that should receive W3C Trace Context headers |
-| `instrumentations`   | `InstrumentationConfig`  | all enabled             | Enable/disable specific auto-instrumentations        |
-| `resourceAttributes` | `Record<string, string>` | --                      | Additional OTel resource attributes                  |
-| `extensions`         | `OtelExtension[]`        | --                      | Opt-in extensions (e.g., `withReactRouter()`)        |
-| `configureTracing`   | `(provider) => void`     | --                      | Escape hatch to configure the TracerProvider         |
-| `configureExporter`  | `(exporter) => void`     | --                      | Escape hatch to configure the OTLP exporter          |
+| Prop                           | Type                     | Default                 | Description                                                     |
+| ------------------------------ | ------------------------ | ----------------------- | --------------------------------------------------------------- |
+| `serviceName`                  | `string`                 | **(required)**          | Sets the `service.name` resource attribute                      |
+| `endpoint`                     | `string`                 | `http://localhost:4318` | OTLP HTTP collector endpoint                                    |
+| `serviceVersion`               | `string`                 | --                      | Sets `service.version` resource attribute                       |
+| `environment`                  | `string`                 | --                      | Sets `deployment.environment` resource attribute                |
+| `headers`                      | `Record<string, string>` | --                      | Custom headers for OTLP requests (e.g., auth tokens)            |
+| `exportTimeout`                | `number`                 | `30000`                 | Export timeout in milliseconds                                  |
+| `ignoreUrls`                   | `(string \| RegExp)[]`   | --                      | URLs to exclude from fetch/XHR instrumentation                  |
+| `propagateTraceHeaderCorsUrls` | `(string \| RegExp)[]`   | `[]`                    | Cross-origin URLs that should receive W3C Trace Context headers |
+| `instrumentations`             | `InstrumentationConfig`  | all enabled             | Enable/disable specific auto-instrumentations                   |
+| `resourceAttributes`           | `Record<string, string>` | --                      | Additional OTel resource attributes                             |
+| `extensions`                   | `OtelExtension[]`        | --                      | Opt-in extensions (e.g., `withReactRouter()`)                   |
+| `configureTracing`             | `(provider) => void`     | --                      | Escape hatch to configure the TracerProvider                    |
+| `configureExporter`            | `(exporter) => void`     | --                      | Escape hatch to configure the OTLP exporter                     |
 
 ### Pointing to a Collector
 
