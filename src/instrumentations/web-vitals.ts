@@ -4,7 +4,7 @@ import type { Metric } from 'web-vitals';
 const METER_NAME = '@raccoon.ninja/otel-react/web-vitals';
 
 export function startWebVitalsCollection(): void {
-  const meter = metrics.getMeter(METER_NAME, '1.0.0');
+  const meter = metrics.getMeter(METER_NAME, '1.1.0');
 
   const lcpHistogram = meter.createHistogram('web_vitals.lcp', {
     description: 'Largest Contentful Paint',

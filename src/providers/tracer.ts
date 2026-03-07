@@ -2,8 +2,8 @@ import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import type { Resource } from '@opentelemetry/resources';
-import type { OtelOptions } from '../core/options';
-import { resolveEndpoint, resolveExportTimeout } from '../core/options';
+import type { OtelOptions } from '@/core/options';
+import { resolveEndpoint, resolveExportTimeout } from '@/core/options';
 
 export interface TracerSetupResult {
   provider: WebTracerProvider;

@@ -76,7 +76,7 @@ export async function initOtelNative(options: OtelOptions): Promise<OtelHandle> 
     // AppState not available — skip
   }
 
-  const logger = loggerProvider.getLogger('@raccoon.ninja/otel-react', '1.0.0');
+  const logger = loggerProvider.getLogger('@raccoon.ninja/otel-react', '1.1.0');
   logger.emit({
     severityNumber: SeverityNumber.INFO,
     severityText: 'INFO',

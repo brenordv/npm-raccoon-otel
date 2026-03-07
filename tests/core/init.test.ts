@@ -2,45 +2,44 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock all OTel SDK modules before importing init
 vi.mock('@opentelemetry/sdk-trace-web', () => ({
-  WebTracerProvider: vi.fn().mockImplementation(() => ({
-    register: vi.fn(),
-    forceFlush: vi.fn().mockResolvedValue(undefined),
-    shutdown: vi.fn().mockResolvedValue(undefined),
-  })),
+  WebTracerProvider: vi.fn().mockImplementation(function () {
+    this.register = vi.fn();
+    this.forceFlush = vi.fn().mockResolvedValue(undefined);
+    this.shutdown = vi.fn().mockResolvedValue(undefined);
+  }),
 }));
 
 vi.mock('@opentelemetry/sdk-trace-base', () => ({
-  BatchSpanProcessor: vi.fn(),
+  BatchSpanProcessor: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/exporter-trace-otlp-http', () => ({
-  OTLPTraceExporter: vi.fn(),
+  OTLPTraceExporter: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/sdk-logs', () => ({
-  LoggerProvider: vi.fn().mockImplementation(() => ({
-    getLogger: vi.fn().mockReturnValue({ emit: vi.fn() }),
-    addLogRecordProcessor: vi.fn(),
-    forceFlush: vi.fn().mockResolvedValue(undefined),
-    shutdown: vi.fn().mockResolvedValue(undefined),
-  })),
-  BatchLogRecordProcessor: vi.fn(),
+  LoggerProvider: vi.fn().mockImplementation(function () {
+    this.getLogger = vi.fn().mockReturnValue({ emit: vi.fn() });
+    this.forceFlush = vi.fn().mockResolvedValue(undefined);
+    this.shutdown = vi.fn().mockResolvedValue(undefined);
+  }),
+  BatchLogRecordProcessor: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/exporter-logs-otlp-http', () => ({
-  OTLPLogExporter: vi.fn(),
+  OTLPLogExporter: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/sdk-metrics', () => ({
-  MeterProvider: vi.fn().mockImplementation(() => ({
-    forceFlush: vi.fn().mockResolvedValue(undefined),
-    shutdown: vi.fn().mockResolvedValue(undefined),
-  })),
-  PeriodicExportingMetricReader: vi.fn(),
+  MeterProvider: vi.fn().mockImplementation(function () {
+    this.forceFlush = vi.fn().mockResolvedValue(undefined);
+    this.shutdown = vi.fn().mockResolvedValue(undefined);
+  }),
+  PeriodicExportingMetricReader: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/exporter-metrics-otlp-http', () => ({
-  OTLPMetricExporter: vi.fn(),
+  OTLPMetricExporter: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/api', () => ({
@@ -78,19 +77,19 @@ vi.mock('@opentelemetry/instrumentation', () => ({
 }));
 
 vi.mock('@opentelemetry/instrumentation-fetch', () => ({
-  FetchInstrumentation: vi.fn(),
+  FetchInstrumentation: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/instrumentation-xml-http-request', () => ({
-  XMLHttpRequestInstrumentation: vi.fn(),
+  XMLHttpRequestInstrumentation: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/instrumentation-document-load', () => ({
-  DocumentLoadInstrumentation: vi.fn(),
+  DocumentLoadInstrumentation: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('@opentelemetry/instrumentation-user-interaction', () => ({
-  UserInteractionInstrumentation: vi.fn(),
+  UserInteractionInstrumentation: vi.fn().mockImplementation(function () {}),
 }));
 
 vi.mock('web-vitals', () => ({

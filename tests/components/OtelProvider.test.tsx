@@ -55,6 +55,23 @@ describe('OtelProvider', () => {
     expect(mockShutdown).toHaveBeenCalledTimes(1);
   });
 
+  it('forwards propagateTraceHeaderCorsUrls to initOtel', () => {
+    const corsUrls = [/https:\/\/api\.example\.com/, 'https://other.example.com'];
+
+    render(
+      <OtelProvider serviceName="test-app" propagateTraceHeaderCorsUrls={corsUrls}>
+        <div>App</div>
+      </OtelProvider>,
+    );
+
+    expect(mockInitOtel).toHaveBeenCalledWith(
+      expect.objectContaining({
+        serviceName: 'test-app',
+        propagateTraceHeaderCorsUrls: corsUrls,
+      }),
+    );
+  });
+
   it('does not re-initialize on re-render', () => {
     const { rerender } = render(
       <OtelProvider serviceName="test-app">

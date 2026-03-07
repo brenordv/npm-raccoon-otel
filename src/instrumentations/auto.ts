@@ -3,8 +3,8 @@ import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
 import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request';
 import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
 import { UserInteractionInstrumentation } from '@opentelemetry/instrumentation-user-interaction';
-import type { InstrumentationConfig, OtelOptions } from '../core/options';
-import { resolveInstrumentations } from '../core/options';
+import type { InstrumentationConfig, OtelOptions } from '@/core/options';
+import { resolveInstrumentations } from '@/core/options';
 
 export function registerAutoInstrumentations(options: OtelOptions): void {
   const config: Required<InstrumentationConfig> = resolveInstrumentations(options);
@@ -12,10 +12,13 @@ export function registerAutoInstrumentations(options: OtelOptions): void {
 
   const instrumentations = [];
 
+  const propagateTraceHeaderCorsUrls = options.propagateTraceHeaderCorsUrls ?? [];
+
   if (config.fetch) {
     instrumentations.push(
       new FetchInstrumentation({
         ignoreUrls,
+        propagateTraceHeaderCorsUrls,
       }),
     );
   }
@@ -24,6 +27,7 @@ export function registerAutoInstrumentations(options: OtelOptions): void {
     instrumentations.push(
       new XMLHttpRequestInstrumentation({
         ignoreUrls,
+        propagateTraceHeaderCorsUrls,
       }),
     );
   }

@@ -5,29 +5,29 @@ vi.mock('@opentelemetry/instrumentation', () => ({
 }));
 
 vi.mock('@opentelemetry/instrumentation-fetch', () => ({
-  FetchInstrumentation: vi.fn().mockImplementation((config) => ({
-    type: 'fetch',
-    config,
-  })),
+  FetchInstrumentation: vi.fn().mockImplementation(function (config) {
+    this.type = 'fetch';
+    this.config = config;
+  }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-xml-http-request', () => ({
-  XMLHttpRequestInstrumentation: vi.fn().mockImplementation((config) => ({
-    type: 'xhr',
-    config,
-  })),
+  XMLHttpRequestInstrumentation: vi.fn().mockImplementation(function (config) {
+    this.type = 'xhr';
+    this.config = config;
+  }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-document-load', () => ({
-  DocumentLoadInstrumentation: vi.fn().mockImplementation(() => ({
-    type: 'document-load',
-  })),
+  DocumentLoadInstrumentation: vi.fn().mockImplementation(function () {
+    this.type = 'document-load';
+  }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-user-interaction', () => ({
-  UserInteractionInstrumentation: vi.fn().mockImplementation(() => ({
-    type: 'user-interaction',
-  })),
+  UserInteractionInstrumentation: vi.fn().mockImplementation(function () {
+    this.type = 'user-interaction';
+  }),
 }));
 
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
@@ -87,6 +87,39 @@ describe('registerAutoInstrumentations', () => {
     expect(XMLHttpRequestInstrumentation).toHaveBeenCalledWith(
       expect.objectContaining({
         ignoreUrls: [/health/, '/analytics'],
+      }),
+    );
+  });
+
+  it('passes propagateTraceHeaderCorsUrls to fetch and xhr instrumentations', () => {
+    registerAutoInstrumentations({
+      serviceName: 'test',
+      propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://backend.local'],
+    });
+
+    expect(FetchInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://backend.local'],
+      }),
+    );
+    expect(XMLHttpRequestInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://backend.local'],
+      }),
+    );
+  });
+
+  it('defaults propagateTraceHeaderCorsUrls to empty array when not provided', () => {
+    registerAutoInstrumentations({ serviceName: 'test' });
+
+    expect(FetchInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [],
+      }),
+    );
+    expect(XMLHttpRequestInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [],
       }),
     );
   });

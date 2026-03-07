@@ -61,6 +61,18 @@ export interface OtelOptions {
    */
   ignoreUrls?: Array<string | RegExp>;
 
+  /**
+   * Cross-origin URLs that should receive W3C Trace Context headers
+   * (traceparent / tracestate). Required when the frontend calls APIs
+   * on a different origin and you want end-to-end distributed traces.
+   *
+   * @example
+   * ```ts
+   * propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://my-backend.local']
+   * ```
+   */
+  propagateTraceHeaderCorsUrls?: Array<string | RegExp>;
+
   /** Extension functions for opt-in instrumentations. */
   extensions?: OtelExtension[];
 }
