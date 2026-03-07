@@ -17,10 +17,6 @@ vi.mock('@opentelemetry/exporter-trace-otlp-http', () => ({
   OTLPTraceExporter: vi.fn().mockImplementation(function () {}),
 }));
 
-vi.mock('@opentelemetry/core', () => ({
-  W3CTraceContextPropagator: vi.fn().mockImplementation(function () {}),
-}));
-
 vi.mock('@opentelemetry/sdk-logs', () => ({
   LoggerProvider: vi.fn().mockImplementation(function () {
     this.getLogger = vi.fn().mockReturnValue({ emit: vi.fn() });
