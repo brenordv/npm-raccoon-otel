@@ -22,7 +22,7 @@ const TRACER_NAME = '@raccoon.ninja/otel-react/router';
 export function withReactRouter(): OtelExtension {
   return (_context: ExtensionContext) => {
     // Pre-register the tracer scope so route spans are properly attributed
-    trace.getTracer(TRACER_NAME, '1.0.0');
+    trace.getTracer(TRACER_NAME, '1.1.0');
   };
 }
 

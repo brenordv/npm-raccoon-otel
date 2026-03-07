@@ -90,4 +90,37 @@ describe('registerAutoInstrumentations', () => {
       }),
     );
   });
+
+  it('passes propagateTraceHeaderCorsUrls to fetch and xhr instrumentations', () => {
+    registerAutoInstrumentations({
+      serviceName: 'test',
+      propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://backend.local'],
+    });
+
+    expect(FetchInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://backend.local'],
+      }),
+    );
+    expect(XMLHttpRequestInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [/api\.example\.com/, 'https://backend.local'],
+      }),
+    );
+  });
+
+  it('defaults propagateTraceHeaderCorsUrls to empty array when not provided', () => {
+    registerAutoInstrumentations({ serviceName: 'test' });
+
+    expect(FetchInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [],
+      }),
+    );
+    expect(XMLHttpRequestInstrumentation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        propagateTraceHeaderCorsUrls: [],
+      }),
+    );
+  });
 });

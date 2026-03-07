@@ -22,7 +22,7 @@ const TRACER_NAME = '@raccoon.ninja/otel-react/react-navigation';
  */
 export function withReactNavigation(): OtelExtension {
   return () => {
-    trace.getTracer(TRACER_NAME, '1.0.0');
+    trace.getTracer(TRACER_NAME, '1.1.0');
   };
 }
 
@@ -32,7 +32,7 @@ export function withReactNavigation(): OtelExtension {
  * @returns A function suitable for React Navigation's onStateChange prop.
  */
 export function createNavigationTracker() {
-  const tracer = trace.getTracer(TRACER_NAME, '1.0.0');
+  const tracer = trace.getTracer(TRACER_NAME, '1.1.0');
   let previousRouteName: string | undefined;
 
   return (state: { routes: Array<{ name: string }>; index: number } | undefined) => {

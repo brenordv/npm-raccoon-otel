@@ -47,7 +47,7 @@ export async function initOtelServer(options: OtelOptions): Promise<OtelHandle> 
   const attributes: Record<string, string> = {
     [ATTR_SERVICE_NAME]: options.serviceName,
     'telemetry.sdk.name': '@raccoon.ninja/otel-react',
-    'telemetry.sdk.version': '1.0.0',
+    'telemetry.sdk.version': '1.1.0',
   };
 
   if (options.serviceVersion) {

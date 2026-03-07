@@ -1,9 +1,10 @@
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { W3CTraceContextPropagator } from '@opentelemetry/core';
 import type { Resource } from '@opentelemetry/resources';
-import type { OtelOptions } from '../core/options';
-import { resolveEndpoint, resolveExportTimeout } from '../core/options';
+import type { OtelOptions } from '@/core/options';
+import { resolveEndpoint, resolveExportTimeout } from '@/core/options';
 
 export interface TracerSetupResult {
   provider: WebTracerProvider;
@@ -29,7 +30,9 @@ export function createTracerProvider(options: OtelOptions, resource: Resource): 
 
   options.configureTracing?.(provider);
 
-  provider.register();
+  provider.register({
+    propagator: new W3CTraceContextPropagator(),
+  });
 
   return { provider, exporter };
 }

@@ -1,6 +1,6 @@
 {
   "name": "@raccoon.ninja/otel-react",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Drop-in OpenTelemetry instrumentation for React, React Native, and Next.js",
   "author": "raccoon.ninja",
   "license": "MIT",
@@ -93,6 +93,7 @@
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
     "@opentelemetry/api-logs": "^0.56.0",
+    "@opentelemetry/core": "^2.0.0",
     "@opentelemetry/sdk-trace-web": "^2.0.0",
     "@opentelemetry/sdk-trace-base": "^2.0.0",
     "@opentelemetry/sdk-metrics": "^2.0.0",

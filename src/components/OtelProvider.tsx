@@ -22,6 +22,8 @@ export interface OtelProviderProps {
   exportTimeout?: number;
   /** URLs to exclude from fetch/XHR instrumentation. */
   ignoreUrls?: Array<string | RegExp>;
+  /** Cross-origin URLs that should receive W3C Trace Context headers. */
+  propagateTraceHeaderCorsUrls?: Array<string | RegExp>;
   /** Escape hatch: configure the TracerProvider. */
   configureTracing?: OtelOptions['configureTracing'];
   /** Escape hatch: configure the OTLP exporter. */
@@ -60,6 +62,7 @@ export function OtelProvider({
   headers,
   exportTimeout,
   ignoreUrls,
+  propagateTraceHeaderCorsUrls,
   configureTracing,
   configureExporter,
   extensions,
@@ -77,6 +80,7 @@ export function OtelProvider({
       headers,
       exportTimeout,
       ignoreUrls,
+      propagateTraceHeaderCorsUrls,
       configureTracing,
       configureExporter,
       extensions,
