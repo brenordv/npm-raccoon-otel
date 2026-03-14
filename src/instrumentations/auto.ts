@@ -4,11 +4,19 @@ import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xm
 import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
 import { UserInteractionInstrumentation } from '@opentelemetry/instrumentation-user-interaction';
 import type { InstrumentationConfig, OtelOptions } from '@/core/options';
-import { resolveInstrumentations } from '@/core/options';
+import { resolveInstrumentations, resolveEndpoint } from '@/core/options';
 
 export function registerAutoInstrumentations(options: OtelOptions): void {
   const config: Required<InstrumentationConfig> = resolveInstrumentations(options);
-  const ignoreUrls = options.ignoreUrls ?? [];
+
+  // Automatically exclude the OTLP collector endpoint from instrumentation
+  // to prevent the SDK from tracing its own export requests.
+  const endpoint = resolveEndpoint(options);
+  const escapedEndpoint = endpoint.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const ignoreUrls: Array<string | RegExp> = [
+    ...(options.ignoreUrls ?? []),
+    new RegExp(escapedEndpoint),
+  ];
 
   const instrumentations = [];
 

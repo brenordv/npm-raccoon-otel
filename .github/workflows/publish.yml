@@ -62,4 +62,11 @@ jobs:
           fi
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if echo "$PKG_VERSION" | grep -q '-'; then
+            echo "Pre-release detected ($PKG_VERSION), publishing with --tag next"
+            npm publish --access public --provenance --tag next
+          else
+            npm publish --access public --provenance
+          fi
