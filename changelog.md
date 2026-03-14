@@ -27,12 +27,12 @@ user-supplied `ignoreUrls` array before it is passed to both the Fetch and XHR i
 - **Custom exporter transports:** If you replaced the default OTLP HTTP exporter with a custom transport that does not
   use `fetch`/`XMLHttpRequest` (e.g., `navigator.sendBeacon`, WebSocket), this change has no effect because the auto-ignore
   targets the endpoint URL, not the transport mechanism.
-- **Multiple collector endpoints:** If your app exports traces and metrics/logs to *different* endpoints (e.g., by
+- **Multiple collector endpoints:** If your app exports traces and metrics/logs to _different_ endpoints (e.g., by
   configuring separate exporters manually via `configureExporter`), only the primary `endpoint` option is auto-ignored.
   Add any additional collector URLs to `ignoreUrls` manually.
 - **Regex matching scope:** The auto-generated regex is an escaped literal match of the full endpoint string
-  (e.g., `http://collector\.example\.com:4318`). It will match any URL that *contains* that string, including sub-paths
-  like `/v1/traces`. If your collector endpoint shares a common prefix with an API you *do* want instrumented, verify
+  (e.g., `http://collector\.example\.com:4318`). It will match any URL that _contains_ that string, including sub-paths
+  like `/v1/traces`. If your collector endpoint shares a common prefix with an API you _do_ want instrumented, verify
   there is no unintended overlap.
 
 # 1.1.0

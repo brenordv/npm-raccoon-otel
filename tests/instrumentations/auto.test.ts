@@ -5,14 +5,20 @@ vi.mock('@opentelemetry/instrumentation', () => ({
 }));
 
 vi.mock('@opentelemetry/instrumentation-fetch', () => ({
-  FetchInstrumentation: vi.fn().mockImplementation(function (this: Record<string, unknown>, config: unknown) {
+  FetchInstrumentation: vi.fn().mockImplementation(function (
+    this: Record<string, unknown>,
+    config: unknown,
+  ) {
     this.type = 'fetch';
     this.config = config;
   }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-xml-http-request', () => ({
-  XMLHttpRequestInstrumentation: vi.fn().mockImplementation(function (this: Record<string, unknown>, config: unknown) {
+  XMLHttpRequestInstrumentation: vi.fn().mockImplementation(function (
+    this: Record<string, unknown>,
+    config: unknown,
+  ) {
     this.type = 'xhr';
     this.config = config;
   }),
@@ -25,7 +31,9 @@ vi.mock('@opentelemetry/instrumentation-document-load', () => ({
 }));
 
 vi.mock('@opentelemetry/instrumentation-user-interaction', () => ({
-  UserInteractionInstrumentation: vi.fn().mockImplementation(function (this: Record<string, unknown>) {
+  UserInteractionInstrumentation: vi.fn().mockImplementation(function (
+    this: Record<string, unknown>,
+  ) {
     this.type = 'user-interaction';
   }),
 }));
