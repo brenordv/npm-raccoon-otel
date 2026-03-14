@@ -7,13 +7,12 @@ import {
 import type { OtelOptions } from './options';
 
 const SDK_NAME = '@raccoon.ninja/otel-react';
-const SDK_VERSION = '1.1.0';
 
 export function buildResource(options: OtelOptions) {
   const attributes: Record<string, string> = {
     [ATTR_SERVICE_NAME]: options.serviceName,
     'telemetry.sdk.name': SDK_NAME,
-    'telemetry.sdk.version': SDK_VERSION,
+    'telemetry.sdk.version': __SDK_VERSION__,
     'telemetry.sdk.language': 'webjs',
   };
 

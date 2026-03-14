@@ -43,7 +43,7 @@ export function initOtel(options: OtelOptions): OtelHandle {
   }
 
   // Log initialization success
-  const logger = loggerProvider.getLogger('@raccoon.ninja/otel-react', '1.1.0');
+  const logger = loggerProvider.getLogger('@raccoon.ninja/otel-react', __SDK_VERSION__);
   logger.emit({
     severityNumber: SeverityNumber.INFO,
     severityText: 'INFO',

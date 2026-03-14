@@ -20,6 +20,9 @@ describe('withReactRouter', () => {
     const ext = withReactRouter();
     ext({ tracerProvider: {} as WebTracerProvider });
 
-    expect(trace.getTracer).toHaveBeenCalledWith('@raccoon.ninja/otel-react/router', '1.1.0');
+    expect(trace.getTracer).toHaveBeenCalledWith(
+      '@raccoon.ninja/otel-react/router',
+      __SDK_VERSION__,
+    );
   });
 });

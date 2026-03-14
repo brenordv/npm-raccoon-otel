@@ -1,4 +1,10 @@
+import { readFileSync } from 'node:fs';
 import { defineConfig } from 'tsup';
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const sharedDefine = {
+  __SDK_VERSION__: JSON.stringify(pkg.version),
+};
 
 export default defineConfig([
   {
@@ -10,6 +16,7 @@ export default defineConfig([
     sourcemap: true,
     clean: true,
     treeshake: true,
+    define: sharedDefine,
     external: [
       'react',
       'react-dom',
@@ -32,6 +39,7 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     treeshake: true,
+    define: sharedDefine,
     external: ['react', 'react-dom', 'react-native', '@react-navigation/native'],
     outExtension({ format }) {
       return {
@@ -47,6 +55,7 @@ export default defineConfig([
     dts: true,
     sourcemap: true,
     treeshake: true,
+    define: sharedDefine,
     external: ['react', 'react-dom', 'next'],
     outExtension({ format }) {
       return {
