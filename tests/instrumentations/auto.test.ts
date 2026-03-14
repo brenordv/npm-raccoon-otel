@@ -5,27 +5,35 @@ vi.mock('@opentelemetry/instrumentation', () => ({
 }));
 
 vi.mock('@opentelemetry/instrumentation-fetch', () => ({
-  FetchInstrumentation: vi.fn().mockImplementation(function (config) {
+  FetchInstrumentation: vi.fn().mockImplementation(function (
+    this: Record<string, unknown>,
+    config: unknown,
+  ) {
     this.type = 'fetch';
     this.config = config;
   }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-xml-http-request', () => ({
-  XMLHttpRequestInstrumentation: vi.fn().mockImplementation(function (config) {
+  XMLHttpRequestInstrumentation: vi.fn().mockImplementation(function (
+    this: Record<string, unknown>,
+    config: unknown,
+  ) {
     this.type = 'xhr';
     this.config = config;
   }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-document-load', () => ({
-  DocumentLoadInstrumentation: vi.fn().mockImplementation(function () {
+  DocumentLoadInstrumentation: vi.fn().mockImplementation(function (this: Record<string, unknown>) {
     this.type = 'document-load';
   }),
 }));
 
 vi.mock('@opentelemetry/instrumentation-user-interaction', () => ({
-  UserInteractionInstrumentation: vi.fn().mockImplementation(function () {
+  UserInteractionInstrumentation: vi.fn().mockImplementation(function (
+    this: Record<string, unknown>,
+  ) {
     this.type = 'user-interaction';
   }),
 }));
@@ -79,16 +87,39 @@ describe('registerAutoInstrumentations', () => {
       ignoreUrls: [/health/, '/analytics'],
     });
 
-    expect(FetchInstrumentation).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ignoreUrls: [/health/, '/analytics'],
-      }),
-    );
-    expect(XMLHttpRequestInstrumentation).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ignoreUrls: [/health/, '/analytics'],
-      }),
-    );
+    // User-provided ignoreUrls are preserved, plus the auto-appended OTEL endpoint regex
+    const fetchCall = vi.mocked(FetchInstrumentation).mock.calls[0][0] as {
+      ignoreUrls: Array<string | RegExp>;
+    };
+    expect(fetchCall.ignoreUrls).toHaveLength(3);
+    expect(fetchCall.ignoreUrls[0]).toEqual(/health/);
+    expect(fetchCall.ignoreUrls[1]).toBe('/analytics');
+    expect(fetchCall.ignoreUrls[2]).toBeInstanceOf(RegExp);
+
+    const xhrCall = vi.mocked(XMLHttpRequestInstrumentation).mock.calls[0][0] as {
+      ignoreUrls: Array<string | RegExp>;
+    };
+    expect(xhrCall.ignoreUrls).toHaveLength(3);
+    expect(xhrCall.ignoreUrls[0]).toEqual(/health/);
+    expect(xhrCall.ignoreUrls[1]).toBe('/analytics');
+    expect(xhrCall.ignoreUrls[2]).toBeInstanceOf(RegExp);
+  });
+
+  it('automatically adds the OTEL endpoint to ignoreUrls', () => {
+    const endpoint = 'http://otel.example.com:4318';
+    registerAutoInstrumentations({
+      serviceName: 'test',
+      endpoint,
+    });
+
+    const fetchCall = vi.mocked(FetchInstrumentation).mock.calls[0][0] as {
+      ignoreUrls: Array<string | RegExp>;
+    };
+    expect(fetchCall.ignoreUrls).toHaveLength(1);
+    const endpointRegex = fetchCall.ignoreUrls[0] as RegExp;
+    expect(endpointRegex).toBeInstanceOf(RegExp);
+    expect(endpointRegex.test('http://otel.example.com:4318/v1/traces')).toBe(true);
+    expect(endpointRegex.test('http://other.example.com/api')).toBe(false);
   });
 
   it('passes propagateTraceHeaderCorsUrls to fetch and xhr instrumentations', () => {

@@ -47,7 +47,7 @@ export class TracedErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    const tracer = trace.getTracer(TRACER_NAME, '1.1.0');
+    const tracer = trace.getTracer(TRACER_NAME, __SDK_VERSION__);
     const span = tracer.startSpan('error-boundary.catch');
 
     span.setStatus({ code: SpanStatusCode.ERROR, message: error.message });
@@ -66,7 +66,7 @@ export class TracedErrorBoundary extends Component<
 
     // Also emit as a log record
     try {
-      const logger = logs.getLogger(LOGGER_NAME, '1.1.0');
+      const logger = logs.getLogger(LOGGER_NAME, __SDK_VERSION__);
       logger.emit({
         severityNumber: SeverityNumber.ERROR,
         severityText: 'ERROR',

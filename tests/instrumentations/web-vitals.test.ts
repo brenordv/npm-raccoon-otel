@@ -33,7 +33,10 @@ describe('startWebVitalsCollection', () => {
   it('creates five histograms for web vitals', () => {
     startWebVitalsCollection();
 
-    expect(metrics.getMeter).toHaveBeenCalledWith('@raccoon.ninja/otel-react/web-vitals', '1.1.0');
+    expect(metrics.getMeter).toHaveBeenCalledWith(
+      '@raccoon.ninja/otel-react/web-vitals',
+      __SDK_VERSION__,
+    );
 
     const createHistogram = metrics.getMeter('test').createHistogram;
     expect(createHistogram).toHaveBeenCalledTimes(5);
