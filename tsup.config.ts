@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { defineConfig } from 'tsup';
 
-const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const pkg = JSON.parse(readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'));
 const sharedDefine = {
   __SDK_VERSION__: JSON.stringify(pkg.version),
 };
